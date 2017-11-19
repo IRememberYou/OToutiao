@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">OToutiao</string>
+    <string name="close_desc">关闭侧边栏</string>
+    <string name="open_desc">打开侧边栏</string>
+    <string name="double_click_exit">再按一次退出程序</string>
+    <string name="network_error">网络不给力</string>
+    <string name="share_to">分享</string>
+</resources>
