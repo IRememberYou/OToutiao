@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.pinan.otoutiao.base.BaseApplication;
+import com.example.pinan.otoutiao.base.init.BaseApplication;
 import com.example.pinan.otoutiao.database.table.NewsChannelTable;
 
 /**

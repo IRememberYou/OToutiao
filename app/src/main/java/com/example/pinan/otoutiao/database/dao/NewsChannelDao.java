@@ -5,11 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.pinan.otoutiao.R;
-import com.example.pinan.otoutiao.base.BaseApplication;
+import com.example.pinan.otoutiao.base.init.BaseApplication;
 import com.example.pinan.otoutiao.base.Constant;
 import com.example.pinan.otoutiao.database.DatabaseHelper;
 import com.example.pinan.otoutiao.database.table.NewsChannelTable;
-import com.example.pinan.otoutiao.newstab.bean.NewsChannelBean;
+import com.example.pinan.otoutiao.function.newstab.bean.NewsChannelBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,12 @@ public class NewsChannelDao {
     
     public NewsChannelDao() {
         mDb = DatabaseHelper.getDatabase();
+    }
+    
+    public void recycle() {
+        if (mDb != null) {
+            mDb.close();
+        }
     }
     
     public void addInitData() {
@@ -82,11 +88,8 @@ public class NewsChannelDao {
         return list;
     }
     
-    
     public boolean removeAll() {
         int delete = mDb.delete(NewsChannelTable.TABLENAME, null, null);
         return delete != -1;
     }
-    
-    
 }

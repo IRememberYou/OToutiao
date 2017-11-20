@@ -1,13 +1,18 @@
 package com.example.pinan.otoutiao.base.presenter;
 
 /**
- *
- * @author pinan
- * @date 2017/11/15
+ * Created by Meiji on 2017/5/7.
  */
 
-public interface IBasePresenter<T extends IBaseView> {
-    void attachView(T t);
-    
-    void detachView();
+public interface IBasePresenter {
+
+    /**
+     * 刷新数据
+     */
+    void doRefresh();
+
+    /**
+     * 显示网络错误
+     */
+    void doShowNetError();
 }

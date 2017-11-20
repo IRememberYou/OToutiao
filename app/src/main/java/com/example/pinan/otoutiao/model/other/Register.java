@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.example.pinan.otoutiao.model.news.NewsArticleImgViewBinder;
 import com.example.pinan.otoutiao.model.news.NewsArticleTextViewBinder;
 import com.example.pinan.otoutiao.model.news.NewsArticleVideoViewBinder;
-import com.example.pinan.otoutiao.newstab.bean.MultiNewsArticleDataBean;
+import com.example.pinan.otoutiao.function.newstab.bean.MultiNewsArticleDataBean;
 
 import me.drakeet.multitype.ClassLinker;
 import me.drakeet.multitype.ItemViewBinder;

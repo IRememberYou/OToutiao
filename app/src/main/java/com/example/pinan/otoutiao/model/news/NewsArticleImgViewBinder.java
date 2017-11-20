@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pinan.otoutiao.R;
-import com.example.pinan.otoutiao.newstab.bean.MultiNewsArticleDataBean;
+import com.example.pinan.otoutiao.function.newstab.bean.MultiNewsArticleDataBean;
 import com.example.pinan.otoutiao.utils.ImageLoader;
 import com.example.pinan.otoutiao.widget.CircleImageView;
 

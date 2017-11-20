@@ -3,7 +3,7 @@ package com.example.pinan.otoutiao.model.other;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.pinan.otoutiao.newstab.bean.MultiNewsArticleDataBean;
+import com.example.pinan.otoutiao.function.newstab.bean.MultiNewsArticleDataBean;
 
 import java.util.List;
 

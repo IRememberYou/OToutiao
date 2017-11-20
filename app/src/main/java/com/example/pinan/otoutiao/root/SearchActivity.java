@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.example.pinan.otoutiao.R;
-import com.example.pinan.otoutiao.base.BaseActivity;
+import com.example.pinan.otoutiao.base.init.BaseActivity;
 
 /**
  *

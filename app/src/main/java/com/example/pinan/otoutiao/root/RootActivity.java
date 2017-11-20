@@ -14,12 +14,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.pinan.otoutiao.R;
-import com.example.pinan.otoutiao.base.BaseActivity;
-import com.example.pinan.otoutiao.mediatab.MediaTabFragment;
-import com.example.pinan.otoutiao.newstab.NewsTabFragment;
-import com.example.pinan.otoutiao.phototab.PhotoTabFragment;
+import com.example.pinan.otoutiao.base.init.BaseActivity;
+import com.example.pinan.otoutiao.function.mediatab.MediaTabFragment;
+import com.example.pinan.otoutiao.function.newstab.NewsTabFragment;
+import com.example.pinan.otoutiao.function.phototab.PhotoTabFragment;
 import com.example.pinan.otoutiao.utils.BottomNavigationViewUtil;
-import com.example.pinan.otoutiao.videotab.VideoTabFragment;
+import com.example.pinan.otoutiao.function.videotab.VideoTabFragment;
 
 /**
  * @author pinan
