@@ -14,8 +14,5 @@ public class BaseActivity extends RxAppCompatActivity {
     
     
     public void initToolBar(Toolbar toolbar, boolean homeAsUpEnabled, String title) {
-    
-    
-    
     }
 }
