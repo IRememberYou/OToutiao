@@ -1,4 +1,4 @@
-package com.example.pinan.otoutiao.function.newstab.adapter;
+package com.example.pinan.otoutiao.base.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * 通用的 TabLayout + ViewPager的适配器
  *
  * @author pinan
  * @date 2017/11/16

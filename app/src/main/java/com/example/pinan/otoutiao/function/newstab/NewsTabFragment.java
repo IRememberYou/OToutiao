@@ -9,7 +9,7 @@ import com.example.pinan.otoutiao.R;
 import com.example.pinan.otoutiao.base.Constant;
 import com.example.pinan.otoutiao.base.init.BaseFragment;
 import com.example.pinan.otoutiao.database.dao.NewsChannelDao;
-import com.example.pinan.otoutiao.function.newstab.adapter.BasePagerAdapter;
+import com.example.pinan.otoutiao.base.adapter.BasePagerAdapter;
 import com.example.pinan.otoutiao.function.newstab.bean.NewsChannelBean;
 
 import java.util.ArrayList;

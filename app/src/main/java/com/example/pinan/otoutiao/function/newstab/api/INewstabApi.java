@@ -7,7 +7,9 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 /**
- * Created by pinan on 2017/11/16.
+ *
+ * @author pinan
+ * @date 2017/11/16
  */
 
 public interface INewstabApi {

@@ -19,14 +19,11 @@ import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 /**
- * @author Meiji
- * @date 2017/6/10
+ * @author pinan
+ * @date 2017/11/20
  */
 
 public abstract class BaseListFragment<T extends IBasePresenter> extends LazyLoadFragment<T> implements IBaseListView<T>, SwipeRefreshLayout.OnRefreshListener {
-    
-    
-    
     public static final String TAG = "BaseListFragment";
     protected RecyclerView recyclerView;
     protected SwipeRefreshLayout swipeRefreshLayout;
@@ -105,6 +102,7 @@ public abstract class BaseListFragment<T extends IBasePresenter> extends LazyLoa
     
     @Override
     public void onShowNoMore() {
+        Toast.makeText(BaseApplication.sContext, R.string.no_more_data, Toast.LENGTH_SHORT).show();
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -127,7 +125,7 @@ public abstract class BaseListFragment<T extends IBasePresenter> extends LazyLoa
     @Override
     public void onRefresh() {
         int firstVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-        if (firstVisibleItemPosition == 0) {
+        if (firstVisibleItemPosition <= 0) {
             presenter.doRefresh();
             return;
         }
