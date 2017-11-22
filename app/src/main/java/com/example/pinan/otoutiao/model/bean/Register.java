@@ -1,11 +1,13 @@
-package com.example.pinan.otoutiao.model.other;
+package com.example.pinan.otoutiao.model.bean;
 
 import android.support.annotation.NonNull;
 
-import com.example.pinan.otoutiao.model.news.NewsArticleImgViewBinder;
-import com.example.pinan.otoutiao.model.news.NewsArticleTextViewBinder;
-import com.example.pinan.otoutiao.model.news.NewsArticleVideoViewBinder;
 import com.example.pinan.otoutiao.function.newstab.bean.MultiNewsArticleDataBean;
+import com.example.pinan.otoutiao.function.newstab.bean.NewsCommentBean;
+import com.example.pinan.otoutiao.model.binder.NewsArticleImgViewBinder;
+import com.example.pinan.otoutiao.model.binder.NewsArticleTextViewBinder;
+import com.example.pinan.otoutiao.model.binder.NewsArticleVideoViewBinder;
+import com.example.pinan.otoutiao.model.binder.NewsCommentViewBinder;
 
 import me.drakeet.multitype.ClassLinker;
 import me.drakeet.multitype.ItemViewBinder;
@@ -25,13 +27,21 @@ public class Register {
                 @NonNull
                 @Override
                 public Class<? extends ItemViewBinder<MultiNewsArticleDataBean, ?>> index(@NonNull MultiNewsArticleDataBean item) {
+                    if (item.has_video) {
+                        return NewsArticleVideoViewBinder.class;
+                    }
                     if (null != item.image_list && item.image_list.size() > 0) {
                         return NewsArticleImgViewBinder.class;
                     }
                     return NewsArticleTextViewBinder.class;
                 }
             });
-        
+        adapter.register(LoadingBean.class, new LoadingViewBinder());
+        adapter.register(LoadingEndBean.class, new LoadingEndViewBinder());
+    }
+    
+    public static void registerNewsCommentItem(@NonNull MultiTypeAdapter adapter) {
+        adapter.register(NewsCommentBean.DataBean.CommentBean.class, new NewsCommentViewBinder());
         adapter.register(LoadingBean.class, new LoadingViewBinder());
         adapter.register(LoadingEndBean.class, new LoadingEndViewBinder());
     }

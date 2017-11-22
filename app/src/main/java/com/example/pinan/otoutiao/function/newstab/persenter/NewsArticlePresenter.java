@@ -61,6 +61,7 @@ public class NewsArticlePresenter implements NewsArticleModel.Presenter {
                 public ObservableSource<MultiNewsArticleDataBean> apply(MultiNewsArticleBean multiNewsArticleBean) throws Exception {
                     List<MultiNewsArticleDataBean> dataList = new ArrayList<>();
                     for (MultiNewsArticleBean.DataBean dataBean : multiNewsArticleBean.data) {
+                        
                         dataList.add(gson.fromJson(dataBean.content, MultiNewsArticleDataBean.class));
                     }
                     return Observable.fromIterable(dataList);
@@ -148,10 +149,8 @@ public class NewsArticlePresenter implements NewsArticleModel.Presenter {
         int i = random.nextInt(10);
         if (i % 2 == 0) {
             return RetrofitUtils.getRetrofit().create(INewstabApi.class).getNewsArticle(this.category, this.time);
-            
         } else {
             return RetrofitUtils.getRetrofit().create(INewstabApi.class).getNewsArticle2(this.category, this.time);
         }
     }
-    
 }

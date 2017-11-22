@@ -84,6 +84,7 @@ public class RetrofitUtils {
             .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
             .addInterceptor(cacheControlInterceptor)
             .addInterceptor(logging)
+//            .addInterceptor(new ChuckInterceptor(BaseApplication.sContext))
             .build();
     }
     

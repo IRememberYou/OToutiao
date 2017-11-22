@@ -1,4 +1,4 @@
-package com.example.pinan.otoutiao.model.other;
+package com.example.pinan.otoutiao.model.bean;
 
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;

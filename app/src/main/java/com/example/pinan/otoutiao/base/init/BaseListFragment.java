@@ -10,7 +10,7 @@ import com.example.pinan.otoutiao.R;
 import com.example.pinan.otoutiao.base.presenter.IBaseListView;
 import com.example.pinan.otoutiao.base.presenter.IBasePresenter;
 import com.example.pinan.otoutiao.base.rx.RxBus;
-import com.example.pinan.otoutiao.model.other.LoadingEndBean;
+import com.example.pinan.otoutiao.model.bean.LoadingEndBean;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;

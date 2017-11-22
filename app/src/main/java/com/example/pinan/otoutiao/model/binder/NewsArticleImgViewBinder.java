@@ -1,4 +1,4 @@
-package com.example.pinan.otoutiao.model.news;
+package com.example.pinan.otoutiao.model.binder;
 
 import android.content.Context;
 import android.content.Intent;

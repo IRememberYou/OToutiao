@@ -11,10 +11,10 @@ import com.example.pinan.otoutiao.base.init.BaseApplication;
 import com.example.pinan.otoutiao.base.init.BaseListFragment;
 import com.example.pinan.otoutiao.function.newstab.model.NewsArticleModel;
 import com.example.pinan.otoutiao.function.newstab.persenter.NewsArticlePresenter;
-import com.example.pinan.otoutiao.model.other.DiffCallback;
-import com.example.pinan.otoutiao.model.other.LoadingBean;
-import com.example.pinan.otoutiao.model.other.OnLoadMoreListener;
-import com.example.pinan.otoutiao.model.other.Register;
+import com.example.pinan.otoutiao.model.bean.DiffCallback;
+import com.example.pinan.otoutiao.model.bean.LoadingBean;
+import com.example.pinan.otoutiao.model.bean.OnLoadMoreListener;
+import com.example.pinan.otoutiao.model.bean.Register;
 import com.example.pinan.otoutiao.utils.LogUtils;
 
 import java.util.List;

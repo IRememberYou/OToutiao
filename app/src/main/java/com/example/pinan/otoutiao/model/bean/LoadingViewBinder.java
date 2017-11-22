@@ -1,4 +1,4 @@
-package com.example.pinan.otoutiao.model.other;
+package com.example.pinan.otoutiao.model.bean;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -42,9 +42,7 @@ public class LoadingViewBinder extends ItemViewBinder<LoadingBean, LoadingViewBi
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
         private ProgressBar progressBar;
-
         ViewHolder(View itemView) {
             super(itemView);
             this.progressBar = itemView.findViewById(R.id.progress_footer);
