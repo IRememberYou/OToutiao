@@ -2,12 +2,8 @@ package com.example.pinan.otoutiao.function.newstab;
 
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.pinan.otoutiao.base.init.BaseApplication;
 import com.example.pinan.otoutiao.base.init.BaseListFragment;
 import com.example.pinan.otoutiao.function.newstab.model.NewsArticleModel;
 import com.example.pinan.otoutiao.function.newstab.persenter.NewsArticlePresenter;
@@ -15,7 +11,6 @@ import com.example.pinan.otoutiao.model.bean.DiffCallback;
 import com.example.pinan.otoutiao.model.bean.LoadingBean;
 import com.example.pinan.otoutiao.model.bean.OnLoadMoreListener;
 import com.example.pinan.otoutiao.model.bean.Register;
-import com.example.pinan.otoutiao.utils.LogUtils;
 
 import java.util.List;
 
@@ -35,9 +30,6 @@ public class NewsArticleFragment extends BaseListFragment<NewsArticleModel.Prese
     public static NewsArticleFragment newInstance(String channelId) {
         NewsArticleFragment fragment = new NewsArticleFragment();
         Bundle bundle = new Bundle();
-        if (TextUtils.isEmpty(channelId)) {
-            Toast.makeText(BaseApplication.sContext, channelId + "11111111   为空", Toast.LENGTH_SHORT).show();
-        }
         bundle.putString(CHANNEL_ID, channelId);
         fragment.setArguments(bundle);
         return fragment;
@@ -45,9 +37,7 @@ public class NewsArticleFragment extends BaseListFragment<NewsArticleModel.Prese
     
     @Override
     public void setPresenter(NewsArticleModel.Presenter presenter) {
-        Log.d(TAG, "setPresenter != null " + "外面呢");
         if (null == presenter) {
-            Log.d(TAG, "setPresenter: ");
             this.presenter = new NewsArticlePresenter(this);
         }
     }
@@ -55,7 +45,6 @@ public class NewsArticleFragment extends BaseListFragment<NewsArticleModel.Prese
     @Override
     protected void initView(View view) {
         super.initView(view);
-        LogUtils.d(TAG, "initView: ");
         adapter = new MultiTypeAdapter(oldItems);
         Register.registerNewsArticleItem(adapter);
         recyclerView.setAdapter(adapter);
@@ -72,42 +61,28 @@ public class NewsArticleFragment extends BaseListFragment<NewsArticleModel.Prese
     
     @Override
     protected void initData() throws NullPointerException {
-        LogUtils.d(TAG, "initData: ");
         mChannelId = getArguments().getString(CHANNEL_ID);
     }
     
     @Override
     public void fetchData() {
         super.fetchData();
-        LogUtils.d(TAG, "fetchData: ");
         onLoadData();
     }
     
     @Override
     public void onLoadData() {
-        Log.d(TAG, "onLoadData: ");
         onShowLoading();
-        if (TextUtils.isEmpty(mChannelId)) {
-            Toast.makeText(mContext, "mChannelId is null", Toast.LENGTH_SHORT).show();
-        }
         presenter.doLoadData(mChannelId);
     }
     
     @Override
     public void onSetAdapter(List<?> list) {
-        Log.d(TAG, "onSetAdapter: ");
         Items newItems = new Items(list);
         newItems.add(new LoadingBean());
         DiffCallback.notifyDataSetChanged(oldItems, newItems, DiffCallback.MUlTI_NEWS, adapter);
         oldItems.clear();
         oldItems.addAll(newItems);
         canLoadMore = true;
-        onHideLoading();
-    }
-    
-    @Override
-    public void onHideLoading() {
-        Log.d(TAG, "onHideLoading: ");
-        super.onHideLoading();
     }
 }

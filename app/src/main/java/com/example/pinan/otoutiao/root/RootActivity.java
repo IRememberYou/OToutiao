@@ -92,10 +92,10 @@ public class RootActivity extends BaseActivity {
     }
     
     private void initView() {
-        mToolbar = findViewById(R.id.toolbar);
-        mBottomNavigation = findViewById(R.id.bottom_navigation);
-        mNavView = findViewById(R.id.nav_view);
-        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mBottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        mNavView = (NavigationView) findViewById(R.id.nav_view);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         
         mToolbar.setTitleTextColor(getResources().getColor(R.color.White));
         setSupportActionBar(mToolbar);

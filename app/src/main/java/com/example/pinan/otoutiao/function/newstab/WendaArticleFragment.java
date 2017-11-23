@@ -26,7 +26,7 @@ public class WendaArticleFragment extends BaseFragment {
     
     @Override
     protected void initView(View view) {
-        tv = view.findViewById(R.id.tv);
+        tv = (TextView) view.findViewById(R.id.tv);
         tv.setText(TAG + "11111111");
         
     }

@@ -19,7 +19,6 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
             layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
             itemCount = layoutManager.getItemCount();
             lastPosition = layoutManager.findLastCompletelyVisibleItemPosition();
         } else {

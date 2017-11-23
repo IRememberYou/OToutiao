@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Random;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -56,12 +55,11 @@ public class NewsArticlePresenter implements NewsArticleModel.Presenter {
         
         getRandom()
             .subscribeOn(Schedulers.io())
-            .switchMap(new Function<MultiNewsArticleBean, ObservableSource<MultiNewsArticleDataBean>>() {
+            .switchMap(new Function<MultiNewsArticleBean, Observable<MultiNewsArticleDataBean>>() {
                 @Override
-                public ObservableSource<MultiNewsArticleDataBean> apply(MultiNewsArticleBean multiNewsArticleBean) throws Exception {
+                public Observable<MultiNewsArticleDataBean> apply(MultiNewsArticleBean multiNewsArticleBean) throws Exception {
                     List<MultiNewsArticleDataBean> dataList = new ArrayList<>();
                     for (MultiNewsArticleBean.DataBean dataBean : multiNewsArticleBean.data) {
-                        
                         dataList.add(gson.fromJson(dataBean.content, MultiNewsArticleDataBean.class));
                     }
                     return Observable.fromIterable(dataList);
@@ -74,14 +72,26 @@ public class NewsArticlePresenter implements NewsArticleModel.Presenter {
                     if (TextUtils.isEmpty(dataBean.source)) {
                         return false;
                     }
-                    //过滤头条问答新闻
-                    if (dataBean.source.contains("头条问答") || dataBean.tag.contains("ad") || dataBean.source.contains("悟空问答")) {
-                        return false;
+                    try {
+                        // 过滤头条问答新闻
+                        if (dataBean.source.contains("头条问答")
+                            || dataBean.tag.contains("ad")
+                            || dataBean.source.contains("悟空问答")) {
+                            return false;
+                        }
+                        // 过滤头条问答新闻
+                        if (dataBean.read_count == 0 || TextUtils.isEmpty(dataBean.media_name)) {
+                            String title = dataBean.title;
+                            if (title.lastIndexOf("？") == title.length() - 1) {
+                                return false;
+                            }
+                        }
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
                     }
-                    
-                    if (dataBean.read_count == 0 || TextUtils.isEmpty(dataBean.media_name)) {
-                        String title = dataBean.title;
-                        if (title.lastIndexOf("?") == title.length() - 1) {
+                    // 过滤重复新闻(与上次刷新的数据比较)
+                    for (MultiNewsArticleDataBean bean : dataList) {
+                        if (bean.title.equals(dataBean.title)) {
                             return false;
                         }
                     }
@@ -89,7 +99,22 @@ public class NewsArticlePresenter implements NewsArticleModel.Presenter {
                 }
             })
             .toList()
+            .map(new Function<List<MultiNewsArticleDataBean>, List<MultiNewsArticleDataBean>>() {
+                @Override
+                public List<MultiNewsArticleDataBean> apply(List<MultiNewsArticleDataBean> list) throws Exception {
+                    // 过滤重复新闻(与本次刷新的数据比较,因为使用了2个请求,数据会有重复)
+                    for (int i = 0; i < list.size() - 1; i++) {
+                        for (int j = list.size() - 1; j > i; j--) {
+                            if (list.get(j).title.equals(list.get(i).title)) {
+                                list.remove(j);
+                            }
+                        }
+                    }
+                    return list;
+                }
+            })
             .observeOn(AndroidSchedulers.mainThread())
+            .compose(mView.<List<MultiNewsArticleDataBean>>bindToLife())
             .subscribe(new Consumer<List<MultiNewsArticleDataBean>>() {
                 @Override
                 public void accept(List<MultiNewsArticleDataBean> list) throws Exception {
@@ -103,10 +128,11 @@ public class NewsArticlePresenter implements NewsArticleModel.Presenter {
                 @Override
                 public void accept(Throwable throwable) throws Exception {
                     doShowNetError();
+                    throwable.printStackTrace();
                 }
             });
     }
-
+    
     @Override
     public void doLoadMoreData() {
         doLoadData();
@@ -123,7 +149,7 @@ public class NewsArticlePresenter implements NewsArticleModel.Presenter {
     public void doShowNoMore() {
         mView.onShowNoMore();
         mView.onHideLoading();
-      
+        
     }
     
     @Override

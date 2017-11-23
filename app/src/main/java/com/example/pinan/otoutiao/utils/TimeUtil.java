@@ -1,10 +1,11 @@
 package com.example.pinan.otoutiao.utils;
 
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
 
 public class TimeUtil {
 

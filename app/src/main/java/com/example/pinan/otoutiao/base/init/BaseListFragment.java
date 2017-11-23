@@ -11,6 +11,7 @@ import com.example.pinan.otoutiao.base.presenter.IBaseListView;
 import com.example.pinan.otoutiao.base.presenter.IBasePresenter;
 import com.example.pinan.otoutiao.base.rx.RxBus;
 import com.example.pinan.otoutiao.model.bean.LoadingEndBean;
+import com.example.pinan.otoutiao.utils.SettingUtil;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
@@ -34,7 +35,7 @@ public abstract class BaseListFragment<T extends IBasePresenter> extends LazyLoa
     
     @Override
     protected int attachLayoutId() {
-        return R.layout.base_list_fragment;
+        return R.layout.fragment_list;
     }
     
     @Override
@@ -43,8 +44,7 @@ public abstract class BaseListFragment<T extends IBasePresenter> extends LazyLoa
         recyclerView.setHasFixedSize(true);
         
         swipeRefreshLayout = view.findViewById(R.id.refresh_layout);
-        // TODO: 2017/11/20 修改
-        swipeRefreshLayout.setColorSchemeColors(mContext.getResources().getColor(R.color.colorPrimary));
+        swipeRefreshLayout.setColorSchemeColors(SettingUtil.getInstance().getColor());
         swipeRefreshLayout.setOnRefreshListener(this);
     }
     
@@ -96,13 +96,11 @@ public abstract class BaseListFragment<T extends IBasePresenter> extends LazyLoa
     public void onResume() {
         super.onResume();
         // 设置下拉刷新的按钮的颜色
-        // TODO: 2017/11/20 修改
-        swipeRefreshLayout.setColorSchemeColors(mContext.getResources().getColor(R.color.colorPrimary));
+        swipeRefreshLayout.setColorSchemeColors(SettingUtil.getInstance().getColor());
     }
     
     @Override
     public void onShowNoMore() {
-        Toast.makeText(BaseApplication.sContext, R.string.no_more_data, Toast.LENGTH_SHORT).show();
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -125,7 +123,7 @@ public abstract class BaseListFragment<T extends IBasePresenter> extends LazyLoa
     @Override
     public void onRefresh() {
         int firstVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-        if (firstVisibleItemPosition <= 0) {
+        if (firstVisibleItemPosition == 0) {
             presenter.doRefresh();
             return;
         }

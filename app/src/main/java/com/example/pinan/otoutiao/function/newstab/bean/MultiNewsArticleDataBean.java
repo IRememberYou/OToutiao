@@ -1,6 +1,7 @@
 package com.example.pinan.otoutiao.function.newstab.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author pinan
@@ -13,13 +14,12 @@ public class MultiNewsArticleDataBean implements Serializable {
     public int read_count;
     public String media_name;
     public int ban_comment;
-    @com.google.gson.annotations.SerializedName("abstract")
     public String abstractX;
     public UgcRecommendBean ugc_recommend;
     public int article_type;
     public String tag;
     public ForwardInfoBean forward_info;
-    public int has_m3u8_video;
+    public boolean has_m3u8_video;
     public String rid;
     public boolean show_portrait_article;
     public int user_verified;
@@ -73,7 +73,33 @@ public class MultiNewsArticleDataBean implements Serializable {
     public java.util.List<ActionListBean> action_list;
     public java.util.List<?> large_image_list;
     
- 
+    public String video_id;
+    public VideoDetailInfoBean video_detail_info;
+    public int video_duration;
+    public int like_count;
+    
+    public static class VideoDetailInfoBean {
+        public int group_flags;
+        public int video_type;
+        public int video_preloading_flag;
+        public int direct_play;
+        public DetailVideoLargeImageBean detail_video_large_image;
+        public int show_pgc_subscribe;
+        public String video_third_monitor_url;
+        public String video_id;
+        public int video_watching_count;
+        public int video_watch_count;
+        public List<?> video_url;
+        
+        public static class DetailVideoLargeImageBean {
+            public String url;
+            public int width;
+            public String uri;
+            public int height;
+            public List<MiddleImageBean> url_list;
+        }
+    }
+    
     
     public static class ActionListBean {
         public int action;

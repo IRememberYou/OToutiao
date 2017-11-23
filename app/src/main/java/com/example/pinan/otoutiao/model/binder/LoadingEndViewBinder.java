@@ -1,4 +1,4 @@
-package com.example.pinan.otoutiao.model.bean;
+package com.example.pinan.otoutiao.model.binder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.pinan.otoutiao.R;
+import com.example.pinan.otoutiao.model.bean.LoadingEndBean;
 
 import me.drakeet.multitype.ItemViewBinder;
 

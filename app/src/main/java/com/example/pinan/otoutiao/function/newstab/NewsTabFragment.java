@@ -43,8 +43,8 @@ public class NewsTabFragment extends BaseFragment {
     
     @Override
     protected void initView(View view) {
-        mVp = view.findViewById(R.id.view_pager_news);
-        mTabLayout = view.findViewById(R.id.tablayout);
+        mVp = (ViewPager) view.findViewById(R.id.view_pager_news);
+        mTabLayout = (TabLayout) view.findViewById(R.id.tablayout);
     }
     
     @Override

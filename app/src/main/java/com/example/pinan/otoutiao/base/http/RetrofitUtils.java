@@ -2,7 +2,6 @@ package com.example.pinan.otoutiao.base.http;
 
 import android.support.annotation.NonNull;
 
-import com.example.pinan.otoutiao.BuildConfig;
 import com.example.pinan.otoutiao.base.init.BaseApplication;
 import com.example.pinan.otoutiao.utils.LogUtils;
 import com.example.pinan.otoutiao.utils.NetWorkUtil;
@@ -69,22 +68,16 @@ public class RetrofitUtils {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(@NonNull String message) {
-                if (BuildConfig.DEBUG) {
-                    System.out.println("------------start------------\n\n");
                     LogUtils.e("okHttp:" + message);
-                    System.out.println("------------end------------\n\n");
-                }
             }
         });
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-    
         return new OkHttpClient.Builder()
+            .addInterceptor(cacheControlInterceptor)
+            .addInterceptor(logging)
             .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
             .writeTimeout(WRITE_TIME_OUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
-            .addInterceptor(cacheControlInterceptor)
-            .addInterceptor(logging)
-//            .addInterceptor(new ChuckInterceptor(BaseApplication.sContext))
             .build();
     }
     
@@ -98,19 +91,18 @@ public class RetrofitUtils {
             if (!NetWorkUtil.isNetworkConnected(BaseApplication.sContext)) {
                 request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
             }
-            
-            Response originalResponse = chain.proceed(request);
+            Response response = chain.proceed(request);
             if (NetWorkUtil.isNetworkConnected(BaseApplication.sContext)) {
                 // 有网络时 设置缓存为默认值
                 String cacheControl = request.cacheControl().toString();
-                return originalResponse.newBuilder()
+                return response.newBuilder()
                     .header("Cache-Control", cacheControl)
                     .removeHeader("Pragma") // 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
                     .build();
             } else {
                 // 无网络时 设置超时为1周
                 int maxStale = 60 * 60 * 24 * 7;
-                return originalResponse.newBuilder()
+                return response.newBuilder()
                     .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
                     .removeHeader("Pragma")
                     .build();

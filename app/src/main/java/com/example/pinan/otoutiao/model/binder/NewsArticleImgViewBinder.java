@@ -126,12 +126,12 @@ public class NewsArticleImgViewBinder extends ItemViewBinder<MultiNewsArticleDat
         
         ViewHolder(View itemView) {
             super(itemView);
-            this.iv_media = itemView.findViewById(R.id.iv_media);
-            this.iv_image = itemView.findViewById(R.id.iv_image);
-            this.tv_title = itemView.findViewById(R.id.tv_title);
-            this.tv_abstract = itemView.findViewById(R.id.tv_abstract);
-            this.tv_extra = itemView.findViewById(R.id.tv_extra);
-            this.iv_dots = itemView.findViewById(R.id.iv_dots);
+            this.iv_media = (CircleImageView) itemView.findViewById(R.id.iv_media);
+            this.iv_image = (ImageView) itemView.findViewById(R.id.iv_image);
+            this.tv_title = (TextView) itemView.findViewById(R.id.tv_title);
+            this.tv_abstract = (TextView) itemView.findViewById(R.id.tv_abstract);
+            this.tv_extra = (TextView) itemView.findViewById(R.id.tv_extra);
+            this.iv_dots = (ImageView) itemView.findViewById(R.id.iv_dots);
         }
     }
 }

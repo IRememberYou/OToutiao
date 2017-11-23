@@ -1,6 +1,5 @@
-package com.example.pinan.otoutiao.model.bean;
+package com.example.pinan.otoutiao.model.binder;
 
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -13,11 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.pinan.otoutiao.R;
+import com.example.pinan.otoutiao.model.bean.LoadingBean;
+import com.example.pinan.otoutiao.utils.SettingUtil;
 
 import me.drakeet.multitype.ItemViewBinder;
 
 /**
- * Created by Meiji on 2017/6/8.
+ *
+ * @author Meiji
+ * @date 2017/6/8
  */
 
 public class LoadingViewBinder extends ItemViewBinder<LoadingBean, LoadingViewBinder.ViewHolder> {
@@ -31,7 +34,7 @@ public class LoadingViewBinder extends ItemViewBinder<LoadingBean, LoadingViewBi
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull LoadingBean item) {
-        int color = Color.RED;
+        int color = SettingUtil.getInstance().getColor();
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             Drawable wrapDrawable = DrawableCompat.wrap(holder.progressBar.getIndeterminateDrawable());
             DrawableCompat.setTint(wrapDrawable, color);
@@ -42,7 +45,9 @@ public class LoadingViewBinder extends ItemViewBinder<LoadingBean, LoadingViewBi
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+
         private ProgressBar progressBar;
+
         ViewHolder(View itemView) {
             super(itemView);
             this.progressBar = itemView.findViewById(R.id.progress_footer);
