@@ -16,16 +16,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pinan.otoutiao.R;
+import com.example.pinan.otoutiao.function.newstab.NewsContentActivity;
 import com.example.pinan.otoutiao.function.newstab.bean.MultiNewsArticleDataBean;
 import com.example.pinan.otoutiao.utils.ImageLoader;
+import com.example.pinan.otoutiao.utils.TimeUtil;
 import com.example.pinan.otoutiao.widget.CircleImageView;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.functions.Consumer;
 import me.drakeet.multitype.ItemViewBinder;
 
 /**
- * Created by Meiji on 2017/6/8.
+ *
+ * @author Meiji
+ * @date 2017/6/8
  * 带图片的 item
  */
 
@@ -67,11 +74,10 @@ public class NewsArticleImgViewBinder extends ItemViewBinder<MultiNewsArticleDat
             String tv_comment_count = item.comment_count + "评论";
             String tv_datetime = item.behot_time + "";
             if (!TextUtils.isEmpty(tv_datetime)) {
-//                tv_datetime = TimeUtil.getTimeStampAgo(tv_datetime);
+                tv_datetime = TimeUtil.getTimeStampAgo(tv_datetime);
             }
             
             holder.tv_title.setText(tv_title);
-//            holder.tv_title.setTextSize(SettingUtil.getInstance().getTextSize());
             holder.tv_abstract.setText(tv_abstract);
             holder.tv_extra.setText(tv_source + " - " + tv_comment_count + " - " + tv_datetime);
             holder.iv_dots.setOnClickListener(new View.OnClickListener() {
@@ -102,14 +108,15 @@ public class NewsArticleImgViewBinder extends ItemViewBinder<MultiNewsArticleDat
             });
             
             final String finalImgUrl = imgUrl;
-//            RxView.clicks(holder.itemView)
-//                    .throttleFirst(1, TimeUnit.SECONDS)
-//                    .subscribe(new Consumer<Object>() {
-//                        @Override
-//                        public void accept(@io.reactivex.annotations.NonNull Object o) throws Exception {
-//                            NewsContentActivity.launch(item, finalImgUrl);
-//                        }
-//                    });
+            RxView.clicks(holder.itemView)
+                    //防止重复点击
+                    .throttleFirst(1, TimeUnit.SECONDS)
+                    .subscribe(new Consumer<Object>() {
+                        @Override
+                        public void accept(@io.reactivex.annotations.NonNull Object o) throws Exception {
+                            NewsContentActivity.launch(item, finalImgUrl);
+                        }
+                    });
         } catch (Exception e) {
             e.printStackTrace();
         }

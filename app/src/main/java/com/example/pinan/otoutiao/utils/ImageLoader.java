@@ -23,7 +23,7 @@ public class ImageLoader {
 //        if (SettingUtil.getInstance().getIsNoPhotoMode() && NetWorkUtil.isMobileConnected(context)) {
 //            view.setImageResource(defaultResId);
 //        } else {
-//            Glide.with(context).load(url).crossFade().centerCrop().error(errorResId).into(view);
+            Glide.with(context).load(url).crossFade().centerCrop().error(errorResId).into(view);
 //        }
     }
     

@@ -66,7 +66,7 @@ android {
         debugConfig {
             keyAlias 'app1'
             keyPassword 'otoutiao1234'
-            storeFile file('/Users/pinan/Downloads/OToutiao/app/otoutiao.jks')
+            storeFile file('otoutiao.jks')
             storePassword 'otoutiao1234'
         }
     }
@@ -111,7 +111,6 @@ android {
             buildConfigField 'String', 'IM_SERVER_HOST', RELEASE_IM_SERVER_HOST
             buildConfigField 'int', 'IM_SERVER_PORT', RELEASE_IM_SERVER_PORT
             buildConfigField "boolean", "LEO_DEBUG", RELEASE_LEO_DEBUG
-
             signingConfig signingConfigs.debugConfig
         }
     }
@@ -170,17 +169,14 @@ dependencies {
     implementation "com.android.support:cardview-v7:${SUPPORT_LIBRARY_VERSION}"
     implementation "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
 
-
     // okhttp 3
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     debugImplementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
-
 
     // retrofit 2
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-
 
     // RxJava 2
     implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
@@ -188,7 +184,6 @@ dependencies {
     // RxLifecycle
     implementation 'com.trello.rxlifecycle2:rxlifecycle:2.0.1'
     implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
-
 
     //recycleview的适配器
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.2.9'
@@ -200,6 +195,11 @@ dependencies {
     implementation 'me.drakeet.multitype:multitype:3.4.0',{
         exclude group: 'com.android.support'
     }
+
+    // RxBinding
+    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
+
+
     //http拦截
 //    debugCompile 'com.readystatesoftware.chuck:library:1.1.0'
 //    releaseCompile 'com.readystatesoftware.chuck:library-no-op:1.1.0'

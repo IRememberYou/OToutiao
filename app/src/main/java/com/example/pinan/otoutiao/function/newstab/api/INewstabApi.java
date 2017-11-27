@@ -1,10 +1,16 @@
 package com.example.pinan.otoutiao.function.newstab.api;
 
+import com.example.pinan.otoutiao.base.Constant;
 import com.example.pinan.otoutiao.function.newstab.bean.MultiNewsArticleBean;
+import com.example.pinan.otoutiao.function.newstab.bean.NewsContentBean;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  *
@@ -23,4 +29,18 @@ public interface INewstabApi {
     Observable<MultiNewsArticleBean> getNewsArticle2(
         @Query("category") String category,
         @Query("max_behot_time") String maxBehotTime);
+    
+    
+    /**
+     * 获取新闻内容的API
+     */
+    @GET
+    @Headers("User-Agent:" + Constant.USER_AGENT_MOBILE)
+    Call<ResponseBody> getNewsContentRedirectUrl(@Url String url);
+    /**
+     * 获取新闻HTML内容
+     * http://m.toutiao.com/i6364969235889783298/info/
+     */
+    @GET
+    Observable<NewsContentBean> getNewsContent(@Url String url);
 }

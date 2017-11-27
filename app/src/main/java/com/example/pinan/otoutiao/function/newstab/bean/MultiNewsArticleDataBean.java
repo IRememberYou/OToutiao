@@ -78,7 +78,7 @@ public class MultiNewsArticleDataBean implements Serializable {
     public int video_duration;
     public int like_count;
     
-    public static class VideoDetailInfoBean {
+    public static class VideoDetailInfoBean implements Serializable {
         public int group_flags;
         public int video_type;
         public int video_preloading_flag;
@@ -91,7 +91,7 @@ public class MultiNewsArticleDataBean implements Serializable {
         public int video_watch_count;
         public List<?> video_url;
         
-        public static class DetailVideoLargeImageBean {
+        public static class DetailVideoLargeImageBean implements Serializable {
             public String url;
             public int width;
             public String uri;
@@ -101,31 +101,31 @@ public class MultiNewsArticleDataBean implements Serializable {
     }
     
     
-    public static class ActionListBean {
+    public static class ActionListBean implements Serializable{
         public int action;
         public ExtraBean extra;
         public String desc;
     }
     
-    public static class ExtraBean {
+    public static class ExtraBean implements Serializable {
     
     }
     
-    public static class LogPbBean {
+    public static class LogPbBean implements Serializable {
         public String impr_id;
     }
     
-    public static class UgcRecommendBean {
+    public static class UgcRecommendBean implements Serializable{
         
         public String reason;
         public String activity;
     }
     
-    public static class ForwardInfoBean {
+    public static class ForwardInfoBean implements Serializable {
         public int forward_count;
     }
     
-    public static class MediaInfoBean {
+    public static class MediaInfoBean implements Serializable{
         public long user_id;
         public String verified_content;
         public String avatar_url;
@@ -138,7 +138,7 @@ public class MultiNewsArticleDataBean implements Serializable {
         public boolean user_verified;
     }
     
-    public static class UserInfoBean {
+    public static class UserInfoBean implements Serializable{
         
         public String verified_content;
         public String avatar_url;
@@ -151,10 +151,10 @@ public class MultiNewsArticleDataBean implements Serializable {
         public String description;
     }
     
-    public static class MiddleImageBean {
+    public static class MiddleImageBean implements Serializable {
     }
     
-    public static class ImageListBean {
+    public static class ImageListBean implements Serializable{
         
         public String url;
         public int width;
@@ -162,12 +162,12 @@ public class MultiNewsArticleDataBean implements Serializable {
         public int height;
         public java.util.List<UrlListBean> url_list;
         
-        public static class UrlListBean {
+        public static class UrlListBean implements Serializable{
             public String url;
         }
     }
     
-    public static class FilterWordsBean {
+    public static class FilterWordsBean implements Serializable{
         public String id;
         public String name;
         public boolean is_selected;
