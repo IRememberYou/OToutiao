@@ -5,16 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 /**
- * Created by Meiji on 2017/6/8.
+ * @author pinan
  */
-
 public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
-
+    
     private LinearLayoutManager layoutManager;
     private int itemCount, lastPosition, lastItemCount;
-
+    
     public abstract void onLoadMore();
-
+    
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
@@ -25,7 +24,7 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
             Log.e("OnLoadMoreListener", "The OnLoadMoreListener only support LinearLayoutManager");
             return;
         }
-
+        
         if (lastItemCount != itemCount && lastPosition == itemCount - 1) {
             lastItemCount = itemCount;
             this.onLoadMore();
@@ -34,6 +33,7 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
 
 //    @Override
 //    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//        long stardTime = System.currentTimeMillis();
 //        super.onScrollStateChanged(recyclerView, newState);
 //        if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
 //            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -42,5 +42,7 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
 //                }
 //            }
 //        }
+//        long endTime = System.currentTimeMillis();
+//        System.out.println((endTime - stardTime) + "秒时间执行完毕");
 //    }
 }

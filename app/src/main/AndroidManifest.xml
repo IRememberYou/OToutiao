@@ -31,6 +31,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".root.SearchActivity"/>
         <activity android:name=".function.newstab.NewsContentActivity"/>
+        <activity android:name=".function.newstab.NewsCommentActivity"/>
 
     </application>
 

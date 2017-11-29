@@ -2,6 +2,7 @@ package com.example.pinan.otoutiao.function.newstab.api;
 
 import com.example.pinan.otoutiao.base.Constant;
 import com.example.pinan.otoutiao.function.newstab.bean.MultiNewsArticleBean;
+import com.example.pinan.otoutiao.function.newstab.bean.NewsCommentBean;
 import com.example.pinan.otoutiao.function.newstab.bean.NewsContentBean;
 
 import io.reactivex.Observable;
@@ -43,4 +44,21 @@ public interface INewstabApi {
      */
     @GET
     Observable<NewsContentBean> getNewsContent(@Url String url);
+    
+    
+    
+    /**
+     * 获取新闻评论
+     * 按热度排序
+     * http://is.snssdk.com/article/v53/tab_comments/?group_id=6314103921648926977&offset=0&tab_index=0
+     * 按时间排序
+     * http://is.snssdk.com/article/v53/tab_comments/?group_id=6314103921648926977&offset=0&tab_index=1
+     *
+     * @param groupId 新闻ID
+     * @param offset  偏移量
+     */
+    @GET("http://is.snssdk.com/article/v53/tab_comments/")
+    Observable<NewsCommentBean> getNewsComment(
+        @Query("group_id") String groupId,
+        @Query("offset") int offset);
 }

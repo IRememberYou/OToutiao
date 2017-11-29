@@ -3,11 +3,13 @@ package com.example.pinan.otoutiao.model.bean;
 import android.support.annotation.NonNull;
 
 import com.example.pinan.otoutiao.function.newstab.bean.MultiNewsArticleDataBean;
+import com.example.pinan.otoutiao.function.newstab.bean.NewsCommentBean;
 import com.example.pinan.otoutiao.model.binder.LoadingEndViewBinder;
 import com.example.pinan.otoutiao.model.binder.LoadingViewBinder;
 import com.example.pinan.otoutiao.model.binder.NewsArticleImgViewBinder;
 import com.example.pinan.otoutiao.model.binder.NewsArticleTextViewBinder;
 import com.example.pinan.otoutiao.model.binder.NewsArticleVideoViewBinder;
+import com.example.pinan.otoutiao.model.binder.NewsCommentViewBinder;
 import com.example.pinan.otoutiao.model.binder.PhotoBinder;
 
 import me.drakeet.multitype.ClassLinker;
@@ -45,6 +47,12 @@ public class Register {
     
     public static void registerPhotoItem(@NonNull MultiTypeAdapter adapter) {
         adapter.register(PhotoBean.class, new PhotoBinder());
+        adapter.register(LoadingBean.class, new LoadingViewBinder());
+        adapter.register(LoadingEndBean.class, new LoadingEndViewBinder());
+    }
+    
+    public static void registerNewsCommendItem(MultiTypeAdapter adapter) {
+        adapter.register(NewsCommentBean.DataBean.CommentBean.class, new NewsCommentViewBinder());
         adapter.register(LoadingBean.class, new LoadingViewBinder());
         adapter.register(LoadingEndBean.class, new LoadingEndViewBinder());
     }

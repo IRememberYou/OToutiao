@@ -1,6 +1,8 @@
 package com.example.pinan.otoutiao.function.newstab;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -9,7 +11,11 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
@@ -18,6 +24,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.pinan.otoutiao.R;
 import com.example.pinan.otoutiao.base.init.BaseFragment;
@@ -25,6 +32,7 @@ import com.example.pinan.otoutiao.function.newstab.bean.MultiNewsArticleDataBean
 import com.example.pinan.otoutiao.function.newstab.model.NewContentModel;
 import com.example.pinan.otoutiao.function.newstab.persenter.NewContentPresenter;
 import com.example.pinan.otoutiao.utils.ImageLoader;
+import com.example.pinan.otoutiao.utils.ShareIntentAction;
 import com.example.pinan.otoutiao.widget.helper.AppBarStateChangeListener;
 
 import java.io.Serializable;
@@ -48,6 +56,7 @@ public class NewsContentFragment extends BaseFragment<NewContentModel.Presenter>
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private String mImgUrl;
     private Toolbar mToolbar;
+    private MultiNewsArticleDataBean mDataBean;
     
     public static NewsContentFragment newInstance(Serializable dataBean, String imgUrl) {
         NewsContentFragment fragment = new NewsContentFragment();
@@ -85,6 +94,7 @@ public class NewsContentFragment extends BaseFragment<NewContentModel.Presenter>
                 mScrollView.scrollTo(0, 0);
             }
         });
+        setHasOptionsMenu(true);
     }
     
     private void initWebClient() {
@@ -143,8 +153,8 @@ public class NewsContentFragment extends BaseFragment<NewContentModel.Presenter>
     
     @Override
     protected void initData() {
-        final MultiNewsArticleDataBean dataBean = (MultiNewsArticleDataBean) getArguments().getSerializable(KEY_DATABEAN);
-        presenter.doLoadData(dataBean);
+        mDataBean = (MultiNewsArticleDataBean) getArguments().getSerializable(KEY_DATABEAN);
+        presenter.doLoadData(mDataBean);
         
         if (isHasImage) {
             ImageLoader.loadCenterCrop(mContext, mImgUrl, mImage, R.color.viewBackground);
@@ -157,20 +167,55 @@ public class NewsContentFragment extends BaseFragment<NewContentModel.Presenter>
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                         }
+                        Log.d("NewsContentFragment", "expanded");
                     } else if (state == State.COLLAPSED) {
-                    
+                        Log.d("NewsContentFragment", "collapsed");
                     } else {
-                        mCollapsingToolbarLayout.setTitle(dataBean.media_name);
+                        mCollapsingToolbarLayout.setTitle(mDataBean.media_name);
                         mToolbar.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                         }
+                        Log.d("NewsContentFragment", "other state");
                     }
                 }
             });
-        }else {
-            mToolbar.setTitle(dataBean.media_name);
+        } else {
+            mToolbar.setTitle(mDataBean.media_name);
         }
+    }
+    
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_browser, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        String shareUrl = mDataBean.share_url != null ? mDataBean.share_url : mDataBean.display_url;
+        switch (itemId) {
+            case R.id.action_open_commend:
+                NewsCommentActivity.launch(mDataBean.group_id + "", mDataBean.item_id + "");
+                break;
+            case R.id.action_open_media_home:
+                Toast.makeText(mContext, "查看主界面", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_share:
+                ShareIntentAction.send(mContext, mDataBean.title + "\n" + shareUrl);
+                break;
+            case R.id.home:
+                getActivity().onBackPressed();
+                break;
+            case R.id.action_open_in_browser:
+                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(shareUrl)));
+                break;
+            default:
+                break;
+        }
+        
+        return super.onOptionsItemSelected(item);
     }
     
     @Override
