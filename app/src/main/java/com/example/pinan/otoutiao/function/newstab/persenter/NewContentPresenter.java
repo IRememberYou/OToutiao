@@ -69,13 +69,13 @@ public class NewContentPresenter implements NewContentModel.Presenter {
                                 String api = httpUrl + "info/";
                                 e.onNext(api);
                             } else {
-                                e.onError(new Throwable());
+                                e.onError(new Throwable("不是头条"));
                             }
                         } else {
-                            e.onError(new Throwable());
+                            e.onError(new Throwable("联网失败"));
                         }
                     } catch (IOException e1) {
-                        e.onError(new Throwable());
+                        e.onComplete();
                         e1.printStackTrace();
                     }
                 }

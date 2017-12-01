@@ -19,11 +19,18 @@ public class NewsContentActivity extends BaseActivity {
     private static final String KEY_IMGURL = "imgurl";
     private static final String KEY_DATABEAN = "databean";
     
+    
     public static void launch(MultiNewsArticleDataBean dataBean, String imgUrl) {
-        Intent intent = new Intent(BaseApplication.sContext,NewsContentActivity.class);
-        intent.putExtra(KEY_IMGURL, imgUrl);
-        intent.putExtra(KEY_DATABEAN, dataBean);
-        BaseApplication.sContext.startActivity(intent);
+        BaseApplication.sContext.startActivity(new Intent(BaseApplication.sContext, NewsContentActivity.class)
+            .putExtra(KEY_IMGURL, imgUrl)
+            .putExtra(KEY_DATABEAN, dataBean)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
+    
+    public static void launch(MultiNewsArticleDataBean dataBean) {
+        BaseApplication.sContext.startActivity(new Intent(BaseApplication.sContext, NewsCommentActivity.class)
+            .putExtra(KEY_DATABEAN, dataBean)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
     
     @Override

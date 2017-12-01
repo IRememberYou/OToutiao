@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.pinan.otoutiao.base.init.BaseApplication;
+import com.example.pinan.otoutiao.database.table.MediaChannelTable;
 import com.example.pinan.otoutiao.database.table.NewsChannelTable;
 
 /**
@@ -58,6 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //创建表
         db.execSQL(NewsChannelTable.CREATE_TABLE);
+        db.execSQL(MediaChannelTable.CREATE_TABLE);
     }
     
     @Override

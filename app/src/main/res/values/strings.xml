@@ -7,4 +7,6 @@
     <string name="share_to">分享</string>
     <string name="no_more_data">没有更多数据了</string>
     <string name="no_more_content">暂无更多内容</string>
+    <string name="error">出错了</string>
+    <string name="extra">%d阅读量 - %d评论 - %s小时前</string>
 </resources>

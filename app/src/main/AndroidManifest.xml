@@ -32,6 +32,8 @@
         <activity android:name=".root.SearchActivity"/>
         <activity android:name=".function.newstab.NewsContentActivity"/>
         <activity android:name=".function.newstab.NewsCommentActivity"/>
+        <activity android:name=".function.newstab.MediaHomeActivity"/>
+        <activity android:name=".function.newstab.VideoContentActivity"/>
 
     </application>
 

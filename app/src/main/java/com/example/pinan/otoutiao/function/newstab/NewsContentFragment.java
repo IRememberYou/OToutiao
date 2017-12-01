@@ -71,7 +71,7 @@ public class NewsContentFragment extends BaseFragment<NewContentModel.Presenter>
     protected int attachLayoutId() {
         mImgUrl = getArguments().getString(KEY_IMGURL);
         isHasImage = !TextUtils.isEmpty(mImgUrl);
-        return R.layout.news_content_fragment;
+        return isHasImage? R.layout.news_content_fragment : R.layout.fragment_news_content;
     }
     
     @Override
@@ -200,6 +200,7 @@ public class NewsContentFragment extends BaseFragment<NewContentModel.Presenter>
                 NewsCommentActivity.launch(mDataBean.group_id + "", mDataBean.item_id + "");
                 break;
             case R.id.action_open_media_home:
+                MediaHomeActivity.launcher(mDataBean.media_info.media_id+"");
                 Toast.makeText(mContext, "查看主界面", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_share:

@@ -7,6 +7,10 @@ import android.widget.TextView;
 import com.example.pinan.otoutiao.R;
 import com.example.pinan.otoutiao.base.init.BaseFragment;
 import com.example.pinan.otoutiao.daojishi.RxCountTime;
+import com.example.pinan.otoutiao.database.dao.MediaChannelDao;
+import com.example.pinan.otoutiao.function.newstab.bean.MediaChannelBean;
+
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,6 +37,7 @@ public class VideoTabFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         mTv = view.findViewById(R.id.tv);
+        textDao();
         RxCountTime.countTime(5)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<Integer>() {
@@ -58,6 +63,13 @@ public class VideoTabFragment extends BaseFragment {
                 }
             });
     
+    }
+    
+    private void textDao() {
+        MediaChannelDao dao = new MediaChannelDao();
+        dao.insert();
+        List<MediaChannelBean> list = dao.queryAll();
+        System.out.println(list.size());
     }
     
     @Override
