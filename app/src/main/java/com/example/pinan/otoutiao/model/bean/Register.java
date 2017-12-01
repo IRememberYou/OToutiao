@@ -3,6 +3,7 @@ package com.example.pinan.otoutiao.model.bean;
 import android.support.annotation.NonNull;
 
 import com.example.pinan.otoutiao.function.newstab.bean.MediaProfileBean;
+import com.example.pinan.otoutiao.function.newstab.bean.MediaWendaBean;
 import com.example.pinan.otoutiao.function.newstab.bean.MultiMediaArticleBean;
 import com.example.pinan.otoutiao.function.newstab.bean.MultiNewsArticleDataBean;
 import com.example.pinan.otoutiao.function.newstab.bean.NewsCommentBean;
@@ -12,6 +13,7 @@ import com.example.pinan.otoutiao.model.binder.MediaArticleHeaderViewBinder;
 import com.example.pinan.otoutiao.model.binder.MediaArticleImgViewBinder;
 import com.example.pinan.otoutiao.model.binder.MediaArticleTextViewBinder;
 import com.example.pinan.otoutiao.model.binder.MediaArticleVideoViewBinder;
+import com.example.pinan.otoutiao.model.binder.MediaWendaViewBinder;
 import com.example.pinan.otoutiao.model.binder.NewsArticleImgViewBinder;
 import com.example.pinan.otoutiao.model.binder.NewsArticleTextViewBinder;
 import com.example.pinan.otoutiao.model.binder.NewsArticleVideoViewBinder;
@@ -82,6 +84,12 @@ public class Register {
                 }
             });
         adapter.register(MediaProfileBean.DataBean.class, new MediaArticleHeaderViewBinder());
+        adapter.register(LoadingBean.class, new LoadingViewBinder());
+        adapter.register(LoadingEndBean.class, new LoadingEndViewBinder());
+    }
+    
+    public static void registerMediaWendaItem(@NonNull MultiTypeAdapter adapter) {
+        adapter.register(MediaWendaBean.AnswerQuestionBean.class, new MediaWendaViewBinder());
         adapter.register(LoadingBean.class, new LoadingViewBinder());
         adapter.register(LoadingEndBean.class, new LoadingEndViewBinder());
     }

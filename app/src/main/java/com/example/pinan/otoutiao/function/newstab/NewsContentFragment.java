@@ -24,7 +24,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.pinan.otoutiao.R;
 import com.example.pinan.otoutiao.base.init.BaseFragment;
@@ -201,7 +200,6 @@ public class NewsContentFragment extends BaseFragment<NewContentModel.Presenter>
                 break;
             case R.id.action_open_media_home:
                 MediaHomeActivity.launcher(mDataBean.media_info.media_id+"");
-                Toast.makeText(mContext, "查看主界面", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_share:
                 ShareIntentAction.send(mContext, mDataBean.title + "\n" + shareUrl);

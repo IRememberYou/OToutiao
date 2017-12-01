@@ -104,11 +104,11 @@ public class MediaHomeActivity extends BaseActivity implements MediaHomeModel.Vi
                 fragmentList.add(MediaArticleFragment.newInstance(bean.data));
                 titleList.add(tabBean.show_name);
             } else if ("video".equals(tabBean.type)) {
-//                fragmentList.add(MediaArticleFragment.newInstance(bean.data));
-//                titleList.add(tabBean.show_name);
-            } else if ("wenda".equals(tabBean.show_name)) {
-//                fragmentList.add(MediaArticleFragment.newInstance(bean));
-//                titleList.add(tabBean.show_name);
+                fragmentList.add(MediaVideoFragment.newInstance(bean.data.media_id));
+                titleList.add(tabBean.show_name);
+            } else if ("wenda".equals(tabBean.type)) {
+                fragmentList.add(MediaWendaFragment.newInstance(bean.data.user_id + ""));
+                titleList.add(tabBean.show_name);
             }
         }
         mViewPager.setAdapter(new BasePagerAdapter(getSupportFragmentManager(), fragmentList, titleList));

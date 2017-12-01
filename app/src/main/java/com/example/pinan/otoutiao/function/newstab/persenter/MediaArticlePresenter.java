@@ -35,6 +35,7 @@ public class MediaArticlePresenter implements MediaArticleModel.Presenter {
     
     private List<MultiMediaArticleBean.DataBean> articleList = new ArrayList<>();
     private List<MediaWendaBean.AnswerQuestionBean> wendaList = new ArrayList<>();
+    private List<MultiMediaArticleBean.DataBean> videoList = new ArrayList<>();
     
     
     public MediaArticlePresenter(MediaArticleModel.View view) {
@@ -87,7 +88,33 @@ public class MediaArticlePresenter implements MediaArticleModel.Presenter {
     
     @Override
     public void doLoadVideo(String... mediaId) {
-    
+        if (mMediaId == null) {
+            mMediaId = mediaId[0];
+        }
+        Map<String, String> asCp = ToutiaoUtil.getAsCp();
+        RetrofitUtils.getRetrofit().create(INewstabApi.class)
+            .getMediaVideo(mMediaId, videoTime, asCp.get(Constant.AS), asCp.get(Constant.CP))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .compose(mView.<MultiMediaArticleBean>bindToLife())
+            .subscribe(new Consumer<MultiMediaArticleBean>() {
+                @Override
+                public void accept(MultiMediaArticleBean bean) throws Exception {
+                    videoTime = bean.next.max_behot_time;
+                    List<MultiMediaArticleBean.DataBean> data = bean.data;
+                    if (data != null && data.size() > 0) {
+                        doSetAdapter(data);
+                    } else {
+                        doShowNoMore();
+                    }
+                }
+            }, new Consumer<Throwable>() {
+                @Override
+                public void accept(Throwable throwable) throws Exception {
+                    doShowNetError();
+                    throwable.printStackTrace();
+                }
+            });
     }
     
     @Override
@@ -107,15 +134,16 @@ public class MediaArticlePresenter implements MediaArticleModel.Presenter {
                     mWendaCursor = mediaWendaBean.cursor;
                     List<MediaWendaBean.AnswerQuestionBean> answer_question = mediaWendaBean.answer_question;
                     if (answer_question != null && answer_question.size() > 0) {
-                        mView.onSetAdapter(answer_question);
+                        doSetWendaAdapter(answer_question);
                     } else {
-                        mView.onShowNoMore();
+                        doShowNoMore();
                     }
                 }
             }, new Consumer<Throwable>() {
                 @Override
                 public void accept(Throwable throwable) throws Exception {
-                    mView.onShowNetError();
+                    doShowNetError();
+                    throwable.printStackTrace();
                 }
             });
     }
@@ -132,19 +160,17 @@ public class MediaArticlePresenter implements MediaArticleModel.Presenter {
             case TYPE_WENDA:
                 if (wendaList.size() < mWendatotal) {
                     RetrofitUtils.getRetrofit().create(INewstabApi.class)
-                        .getMediaWendaLoadMore(mMediaId,mWendaCursor)
+                        .getMediaWendaLoadMore(mMediaId, mWendaCursor)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .compose(mView.<MediaWendaBean>bindToLife())
                         .subscribe(new Consumer<MediaWendaBean>() {
                             @Override
                             public void accept(MediaWendaBean mediaWendaBean) throws Exception {
-                                mWendatotal = mediaWendaBean.total;
-                                mWendaCursor = mediaWendaBean.cursor;
                                 List<MediaWendaBean.AnswerQuestionBean> answer_question = mediaWendaBean.answer_question;
                                 if (answer_question != null && answer_question.size() > 0) {
                                     mView.onSetAdapter(answer_question);
-                                }else {
+                                } else {
                                     mView.onShowNoMore();
                                 }
                             }
@@ -152,6 +178,7 @@ public class MediaArticlePresenter implements MediaArticleModel.Presenter {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
                                 mView.onShowNetError();
+                                throwable.printStackTrace();
                             }
                         });
                 }
@@ -193,11 +220,11 @@ public class MediaArticlePresenter implements MediaArticleModel.Presenter {
                 doLoadArticle();
                 break;
             case TYPE_VIDEO:
-//                if (videoList.size() > 0) {
-//                    videoList.clear();
-//                    videoTime = TimeUtil.getCurrentTimeStamp();
-//                }
-//                doLoadVideo();
+                if (videoList.size() > 0) {
+                    videoList.clear();
+                    videoTime = TimeUtil.getCurrentTimeStamp();
+                }
+                doLoadVideo();
                 break;
             case TYPE_WENDA:
                 if (wendaList.size() > 0) {
