@@ -1,9 +1,12 @@
 package com.example.pinan.otoutiao.function.newstab.persenter;
 
+import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
+
 import com.example.pinan.otoutiao.base.http.RetrofitUtils;
 import com.example.pinan.otoutiao.function.newstab.api.INewstabApi;
 import com.example.pinan.otoutiao.function.newstab.bean.VideoContentBean;
-import com.example.pinan.otoutiao.function.newstab.model.NewsCommentModel;
 import com.example.pinan.otoutiao.function.newstab.model.VideoContentModel;
 
 import java.util.Random;
@@ -22,9 +25,9 @@ import io.reactivex.schedulers.Schedulers;
 public class VideoContentPresenter extends NewsCommentPresenter implements VideoContentModel.Presenter {
     
     
-    private final NewsCommentModel.View mView;
+    private final VideoContentModel.View mView;
     
-    public VideoContentPresenter(NewsCommentModel.View view) {
+    public VideoContentPresenter(VideoContentModel.View view) {
         super(view);
         mView = view;
     }
@@ -36,7 +39,8 @@ public class VideoContentPresenter extends NewsCommentPresenter implements Video
     
     @Override
     public void doShowNetError() {
-    
+        mView.onShowNetError();
+        mView.onHideLoading();
     }
     
     @Override
@@ -48,38 +52,49 @@ public class VideoContentPresenter extends NewsCommentPresenter implements Video
             .map(new Function<VideoContentBean, String>() {
                 @Override
                 public String apply(VideoContentBean videoContentBean) throws Exception {
-                    
-                    return null;
+                    VideoContentBean.DataBean.VideoListBean video_list = videoContentBean.data.video_list;
+                    String main_url = "";
+                    if (video_list.video_1 != null) {
+                        main_url = video_list.video_1.main_url;
+                    } else if (video_list.video_2 != null) {
+                        main_url = video_list.video_2.main_url;
+                    }
+                    return TextUtils.isEmpty(main_url) ? null : new String(Base64.decode(main_url.getBytes(), Base64.DEFAULT));
                 }
             })
             .compose(mView.<String>bindToLife())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Consumer<String>() {
                 @Override
-                public void accept(String videoContentBean) throws Exception {
-                
+                public void accept(String url) throws Exception {
+                    Log.d("VideoContentPresenter", url);
+                    doSetVideoPlay(url);
+                    
                 }
             }, new Consumer<Throwable>() {
                 @Override
                 public void accept(Throwable throwable) throws Exception {
-                
-                
+                    doShowNetError();
+                    
+                    throwable.printStackTrace();
                 }
             });
-        
-        
     }
     
+    @Override
+    public void doSetVideoPlay(String url) {
+        mView.onSetVideoPlay(url);
+    }
     
     private String getVideoContentApi(String videoid) {
         String VIDEO_HOST = "http://ib.365yg.com";
-        String VIDEO_URL = "/viedeo/urls/v/1/toutiao/mp4/%s?r=%s";
+        String VIDEO_URL = "/video/urls/v/1/toutiao/mp4/%s?r=%s";
         String r = getRandom();
         String s = String.format(VIDEO_URL, videoid, r);
         CRC32 crc32 = new CRC32();
         crc32.update(s.getBytes());
-        String crString = crc32.getValue() + "";
-        String url = VIDEO_HOST + s + "&s=" + crString;
+        String crcString = crc32.getValue() + "";
+        String url = VIDEO_HOST + s + "&s=" + crcString;
         return url;
     }
     

@@ -13,12 +13,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pinan.otoutiao.R;
+import com.example.pinan.otoutiao.function.newstab.NewsContentActivity;
 import com.example.pinan.otoutiao.function.newstab.bean.MultiNewsArticleDataBean;
 import com.example.pinan.otoutiao.utils.ImageLoader;
 import com.example.pinan.otoutiao.utils.ShareIntentAction;
 import com.example.pinan.otoutiao.utils.TimeUtil;
 import com.example.pinan.otoutiao.widget.CircleImageView;
+import com.jakewharton.rxbinding2.view.RxView;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.functions.Consumer;
 import me.drakeet.multitype.ItemViewBinder;
 
 /**
@@ -83,14 +88,14 @@ public class NewsArticleTextViewBinder extends ItemViewBinder<MultiNewsArticleDa
                 }
             });
 
-//            RxView.clicks(holder.itemView)
-//                    .throttleFirst(1, TimeUnit.SECONDS)
-//                    .subscribe(new Consumer<Object>() {
-//                        @Override
-//                        public void accept(@io.reactivex.annotations.NonNull Object o) throws Exception {
-//                            NewsContentActivity.launch(item);
-//                        }
-//                    });
+            RxView.clicks(holder.itemView)
+                    .throttleFirst(1, TimeUnit.SECONDS)
+                    .subscribe(new Consumer<Object>() {
+                        @Override
+                        public void accept(@io.reactivex.annotations.NonNull Object o) throws Exception {
+                            NewsContentActivity.launch(item);
+                        }
+                    });
         } catch (Exception e) {
             e.printStackTrace();
         }
