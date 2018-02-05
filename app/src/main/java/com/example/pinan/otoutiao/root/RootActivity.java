@@ -18,8 +18,8 @@ import com.example.pinan.otoutiao.base.init.BaseActivity;
 import com.example.pinan.otoutiao.function.mediatab.MediaTabFragment;
 import com.example.pinan.otoutiao.function.newstab.NewsTabFragment;
 import com.example.pinan.otoutiao.function.phototab.PhotoTabFragment;
-import com.example.pinan.otoutiao.utils.BottomNavigationViewUtil;
 import com.example.pinan.otoutiao.function.videotab.VideoTabFragment;
+import com.example.pinan.otoutiao.utils.BottomNavigationViewUtil;
 
 /**
  * @author pinan
@@ -146,6 +146,10 @@ public class RootActivity extends BaseActivity {
                         break;
                     case R.id.nav_share:
                         Toast.makeText(RootActivity.this, "分享", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_back:
+                        Toast.makeText(RootActivity.this, "反馈", Toast.LENGTH_SHORT).show();
+                        startActivity(BackActivity.class);
                         break;
                     default:
                         break;
