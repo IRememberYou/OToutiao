@@ -54,6 +54,7 @@ public class MediaChannelDao {
     public boolean queryIsExist(String mediaId) {
         Cursor cursor = db.query(MediaChannelTable.TABLE_NAME, null, MediaChannelTable.ID + "=?", new String[]{mediaId}, null, null, null);
         while (cursor.moveToNext()) {
+            cursor.close();
             return true;
         }
         cursor.close();
